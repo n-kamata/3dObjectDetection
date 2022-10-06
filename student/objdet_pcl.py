@@ -14,11 +14,12 @@
 import cv2
 import numpy as np
 import torch
-import zlib
 
 # add project directory to python path to enable relative imports
 import os
+import open3d as o3d
 import sys
+import zlib
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
@@ -39,15 +40,32 @@ def show_pcl(pcl):
     print("student task ID_S1_EX2")
 
     # step 1 : initialize open3d with key callback and create window
+    vis = o3d.visualization.VisualizerWithKeyCallback()
+    vis.create_window(window_name='PCD', width=640, height=360, left=50, top=50, visible=True)
     
     # step 2 : create instance of open3d point-cloud class
+    pcd = o3d.geometry.PointCloud()
 
     # step 3 : set points in pcd instance by converting the point-cloud into 3d vectors (using open3d function Vector3dVector)
+    pcd.points = o3d.utility.Vector3dVector(pcl[:,:3])
 
     # step 4 : for the first frame, add the pcd instance to visualization using add_geometry; for all other frames, use update_geometry instead
-    
-    # step 5 : visualize point cloud and keep window open until right-arrow is pressed (key-code 262)
+    show_pcl.is_first = True
+    if show_pcl.is_first is True:
+        vis.add_geometry(pcd)
+        show_pcl.is_first = False
+    else:
+        vis.update_geometry(pcd)
 
+    def vis_update_geometry(self):
+        vis.update_geometry(pcd)
+        vis.run()
+
+    # step 5 : visualize point cloud and keep window open until right-arrow is pressed (key-code 262)
+    # Note that this key-code doesn't work in Udacity workspcae.
+    # vis.register_key_callback(48, vis_update_geometry)
+    vis.run()
+ 
     #######
     ####### ID_S1_EX2 END #######     
        
