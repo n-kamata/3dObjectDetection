@@ -44,9 +44,12 @@ I also extracted intensity features from pointcloud and map onto BEV.
 
 ### 1-4 ML and evaluation
 I prepared LIDAR and camera dataset with ground truth.  
+
 <img src="figure/../figures/label_detected_objects.png" width="600">
 
 For this project, I used pre-trained model, because I work on an workspace environment prepared by Udacity. I evaluate pre-trained model, so called darknet, and calculate precision, recall, uoi, and position errors.  
+
+
 <img src="figure/../figures/detection_performance_metrics.png" width="600">
 
 Lidar detector is implemented. I will implement tracker using LIDAR and camera detectors and develop sensor fusion method.
@@ -54,15 +57,19 @@ Lidar detector is implemented. I will implement tracker using LIDAR and camera d
 ## 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
 
 This figure shows filtering result using LIDAR measurements to confirm that KF works for single object tracking.
+
 <img src="figure/../figures/filter_result.png" width="600">
 
 This figure shows tacks RMSE result without Kalman filter to confirm that association works. Mean was not good, but somehow a measure was tracked correctly and RMSE can be calculated.
+
 <img src="figure/../figures/trackmanagement_result.png" width="600">
 
 This figure shows tracking result using LIDAR measurements. RMSE means of track0 is 0.15, track1 is 0.12, track3 is 0.19.
+
 <img src="figure/../figures/LIDAR.png" width="600">
 
-This figure shows tracking result using LIDAR and camere measurements. It means sensor fusion result. RMSE mean of track0 is worse, but other RMSEs are better than LIDAR only tracking.
+This figure shows tracking result using LIDAR and camera measurements. It means sensor fusion result. RMSE mean of track0 is worse, but other RMSEs are better than LIDAR only tracking.
+
 <img src="figure/../figures/LIDARandCamera.png" width="600">
 
 We can say sensor fusion result was better than Lidar tracking result. There would be 2 reasons:
