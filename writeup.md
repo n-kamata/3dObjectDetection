@@ -52,10 +52,28 @@ For this project, I used pre-trained model, because I work on an workspace envir
 Lidar detector is implemented. I will implement tracker using LIDAR and camera detectors and develop sensor fusion method.
 
 ## 2. Do you see any benefits in camera-lidar fusion compared to lidar-only tracking (in theory and in your concrete results)? 
-TBD. This is a midterm report.
+
+This figure shows filtering result using LIDAR measurements to confirm that KF works for single object tracking.
+<img src="figure/../figures/filter_result.png" width="600">
+
+This figure shows tacks RMSE result without Kalman filter to confirm that association works. Mean was not good, but somehow a measure was tracked correctly and RMSE can be calculated.
+<img src="figure/../figures/trackmanagement_result.png" width="600">
+
+This figure shows tracking result using LIDAR measurements. RMSE means of track0 is 0.15, track1 is 0.12, track3 is 0.19.
+<img src="figure/../figures/LIDAR.png" width="600">
+
+This figure shows tracking result using LIDAR and camere measurements. It means sensor fusion result. RMSE mean of track0 is worse, but other RMSEs are better than LIDAR only tracking.
+<img src="figure/../figures/LIDARandCamera.png" width="600">
+
+We can say sensor fusion result was better than Lidar tracking result. There would be 2 reasons:
+- There several false positives in LIDAR measures, so fusion with camera can improve the result.
+- Measurement position accuracy may be better than LIDAR in this data.
 
 ## 3. Which challenges will a sensor fusion system face in real-life scenarios? Did you see any of these challenges in the project?
-TBD. This is a midterm report.
+
+Cameras are sensitive to dark scenes. Therefore, detection using LIDAR is more advantageous in night scenes. On the other hand, LIDAR may incorrectly detect road structures and plantings. Although it was not present in this data, it is also weak in rainy scenes. Sensor fusion is an effective method when the performance of one sensor deteriorates like this example.
 
 ## 4. Can you think of ways to improve your tracking results in the future?
-TBD. This is a midterm report.
+- Adjust process and measurement noise in Kalman filter
+- Improve association method using GNN or JPDA
+- Apply more rich model in KF. If camera classify obstacle as vehicle, we can apply vehicle motion model to KF.
